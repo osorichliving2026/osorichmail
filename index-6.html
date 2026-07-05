@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OsoRichMail | Gilt Joy, Delivered</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Work+Sans:wght@400;500;600&display=swap');
+
+  :root{
+    --lagoon: #0E6E7D;
+    --lagoon-deep: #094B56;
+    --sand: #F2E8D5;
+    --sand-light: #FBF7EF;
+    --gilt: #C9A24B;
+    --coral: #E86A5C;
+    --ink: #1B2B29;
+  }
+
+  *{ box-sizing: border-box; margin:0; padding:0; }
+
+  html{ scroll-behavior: smooth; }
+
+  body{
+    background: var(--sand-light);
+    color: var(--ink);
+    font-family: 'Work Sans', sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  h1,h2,h3{
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  a{ color: inherit; }
+
+  .lang-toggle{
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+    background: var(--sand-light);
+    border: 1px solid var(--lagoon);
+    border-radius: 999px;
+    display: flex;
+    padding: 3px;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+  .lang-toggle button{
+    background: none;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 999px;
+    cursor: pointer;
+    color: var(--lagoon);
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 600;
+  }
+  .lang-toggle button.active{
+    background: var(--lagoon);
+    color: var(--sand-light);
+  }
+
+  [data-es]{ display: none; }
+  body.es [data-en]{ display: none; }
+  body.es [data-es]{ display: inline; }
+  body.es [data-es].block{ display: block; }
+  [data-en].block{ display: block; }
+
+  /* ===== HERO ===== */
+  .hero{
+    background: var(--lagoon);
+    color: var(--sand-light);
+    min-height: 92vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 100px 24px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .postmark{
+    width: 128px;
+    height: 128px;
+    border: 2px solid var(--gilt);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 32px;
+    position: relative;
+    animation: stamp-in 0.9s cubic-bezier(.2,.8,.2,1) both;
+    animation-delay: 0.2s;
+    opacity: 0;
+  }
+  .postmark::before{
+    content: '';
+    position: absolute;
+    inset: 8px;
+    border: 1px dashed var(--gilt);
+    border-radius: 50%;
+  }
+  .postmark-text{
+    font-family: 'Fraunces', serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+    color: var(--gilt);
+    text-transform: uppercase;
+    line-height: 1.5;
+  }
+
+  @keyframes stamp-in{
+    0%{ opacity: 0; transform: scale(1.6) rotate(-8deg); }
+    60%{ opacity: 1; }
+    100%{ opacity: 1; transform: scale(1) rotate(-8deg); }
+  }
+
+  .hero h1{
+    font-size: clamp(2.1rem, 5.5vw, 3.6rem);
+    max-width: 820px;
+    margin-bottom: 22px;
+    animation: rise 0.9s ease both;
+    animation-delay: 0.5s;
+    opacity: 0;
+  }
+  .hero p.sub{
+    max-width: 560px;
+    font-size: 1.08rem;
+    color: #D9E4DF;
+    margin-bottom: 36px;
+    animation: rise 0.9s ease both;
+    animation-delay: 0.7s;
+    opacity: 0;
+  }
+  @keyframes rise{
+    0%{ opacity: 0; transform: translateY(16px); }
+    100%{ opacity: 1; transform: translateY(0); }
+  }
+
+  .btn{
+    display: inline-block;
+    background: var(--gilt);
+    color: var(--lagoon-deep);
+    font-weight: 600;
+    padding: 15px 34px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-size: 0.98rem;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    animation: rise 0.9s ease both;
+    animation-delay: 0.9s;
+    opacity: 0;
+  }
+  .btn:hover{ transform: translateY(-2px); box-shadow: 0 10px 24px rgba(0,0,0,0.18); }
+
+  .tideline{
+    position: absolute;
+    bottom: 0; left: 0; width: 100%;
+    height: 60px;
+  }
+
+  /* ===== SECTION SHARED ===== */
+  section{ padding: 80px 24px; }
+  .wrap{ max-width: 880px; margin: 0 auto; }
+  .eyebrow{
+    font-size: 0.78rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--coral);
+    font-weight: 600;
+    margin-bottom: 14px;
+    display: block;
+  }
+  section h2{ font-size: clamp(1.6rem, 3.6vw, 2.3rem); margin-bottom: 20px; }
+
+  /* ===== PROBLEM ===== */
+  .problem{ background: var(--sand); }
+  .problem-list{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 28px;
+    margin-top: 40px;
+  }
+  .problem-item{
+    background: var(--sand-light);
+    border-radius: 16px;
+    padding: 28px 24px;
+    border: 1px solid rgba(15,61,62,0.08);
+  }
+  .problem-item .mark{
+    font-family: 'Fraunces', serif;
+    font-size: 1.6rem;
+    color: var(--coral);
+    display: block;
+    margin-bottom: 10px;
+  }
+  .problem-item p{ font-size: 0.94rem; color: #3c4c48; }
+
+  /* ===== HOW IT WORKS ===== */
+  .how{ background: var(--sand-light); }
+  .steps{
+    counter-reset: step;
+    margin-top: 44px;
+  }
+  .step{
+    display: flex;
+    gap: 24px;
+    padding: 26px 0;
+    border-top: 1px solid rgba(15,61,62,0.12);
+  }
+  .step:last-child{ border-bottom: 1px solid rgba(15,61,62,0.12); }
+  .step-num{
+    font-family: 'Fraunces', serif;
+    font-size: 1.9rem;
+    color: var(--gilt);
+    min-width: 48px;
+  }
+  .step h3{ font-size: 1.08rem; margin-bottom: 6px; }
+  .step p{ font-size: 0.94rem; color: #3c4c48; }
+
+  /* ===== TIERS ===== */
+  .tiers{ background: var(--lagoon); color: var(--sand-light); }
+  .tiers .eyebrow{ color: var(--gilt); }
+  .tier-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+    margin-top: 44px;
+  }
+  .tier{
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(201,162,75,0.35);
+    border-radius: 20px;
+    padding: 34px 28px;
+    position: relative;
+  }
+  .tier.featured{
+    border-color: var(--gilt);
+    background: rgba(201,162,75,0.08);
+  }
+  .tier .stamp-tag{
+    position: absolute;
+    top: -14px;
+    right: 24px;
+    background: var(--gilt);
+    color: var(--lagoon-deep);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: 5px 12px;
+    border-radius: 999px;
+    text-transform: uppercase;
+  }
+  .tier h3{ font-size: 1.25rem; margin-bottom: 6px; }
+  .tier .price{
+    font-family: 'Fraunces', serif;
+    font-size: 2.1rem;
+    margin: 14px 0 6px;
+  }
+  .tier .price span{ font-size: 0.95rem; font-family: 'Work Sans', sans-serif; color: #B9C9C4; }
+  .tier ul{ list-style: none; margin-top: 20px; }
+  .tier li{
+    font-size: 0.92rem;
+    padding: 7px 0;
+    color: #D9E4DF;
+    display: flex;
+    gap: 10px;
+  }
+  .tier li::before{ content: '⛯'; color: var(--gilt); }
+
+  /* ===== WAITLIST FORM ===== */
+  .waitlist{ background: var(--sand); text-align: center; }
+  .waitlist h2{ margin-bottom: 10px; }
+  .waitlist p.lead{ max-width: 520px; margin: 0 auto 36px; color: #3c4c48; }
+  form.waitlist-form{
+    max-width: 460px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  form.waitlist-form input{
+    padding: 14px 18px;
+    border-radius: 12px;
+    border: 1px solid rgba(15,61,62,0.25);
+    font-family: 'Work Sans', sans-serif;
+    font-size: 0.96rem;
+    background: var(--sand-light);
+  }
+  form.waitlist-form input:focus{
+    outline: 2px solid var(--gilt);
+    outline-offset: 2px;
+  }
+  .waitlist .btn{ animation: none; opacity: 1; background: var(--lagoon); color: var(--sand-light); }
+  .waitlist .btn:hover{ background: var(--lagoon-deep); }
+  .confirm-msg{
+    display: none;
+    margin-top: 18px;
+    font-weight: 600;
+    color: var(--lagoon);
+  }
+  .fine{
+    margin-top: 22px;
+    font-size: 0.78rem;
+    color: #6b7a76;
+  }
+
+  /* ===== FOOTER ===== */
+  footer{
+    background: var(--lagoon-deep);
+    color: #9FB3AE;
+    text-align: center;
+    padding: 40px 24px;
+    font-size: 0.85rem;
+  }
+  footer .brand{ color: var(--gilt); font-family: 'Fraunces', serif; font-size: 1.1rem; margin-bottom: 8px; display:block; }
+
+  @media (prefers-reduced-motion: reduce){
+    .postmark, .hero h1, .hero p.sub, .btn{ animation: none !important; opacity: 1 !important; }
+  }
+
+  @media (max-width: 600px){
+    section{ padding: 60px 20px; }
+    .hero{ padding-top: 90px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="lang-toggle">
+  <button class="active" onclick="setLang('en')">EN</button>
+  <button onclick="setLang('es')">ES</button>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="postmark">
+    <div class="postmark-text">OSORICH<br>MAIL<br>PTO MORELOS, <br>MX</div>
+  </div>
+  <h1 data-en>Gilt Joy, delivered.</h1>
+  <h1 data-es>Tu Gilt Joy, entregado.</h1>
+  <p class="sub" data-en>A real U.S. address, scanned and sorted, plus a bilingual human who actually reads your mail so you don't have to translate scary letters at midnight. Built for mamas rebuilding loud and proud across the border.</p>
+  <p class="sub" data-es>Una dirección real en EE. UU., escaneada y organizada, más una persona bilingüe que de verdad lee tu correo para que no tengas que traducir cartas que dan miedo a medianoche. Hecho para mamás que reconstruyen su vida sin pedir permiso.</p>
+  <a href="#waitlist" class="btn" data-en>I'm In, Reserve My Spot</a>
+  <a href="#waitlist" class="btn" data-es>Cuenta Conmigo, Reservar Mi Lugar</a>
+
+  <svg class="tideline" viewBox="0 0 1440 60" preserveAspectRatio="none">
+    <path d="M0,30 C240,60 480,0 720,30 C960,60 1200,0 1440,30 L1440,60 L0,60 Z" fill="#F2E8D5"></path>
+  </svg>
+</section>
+
+<!-- PROBLEM -->
+<section class="problem">
+  <div class="wrap">
+    <span class="eyebrow" data-en>What relocation doesn't warn you about</span>
+    <span class="eyebrow" data-es>Lo que nadie te cuenta sobre mudarte</span>
+    <h2 data-en>The parts of your old life that don't stop just because you moved</h2>
+    <h2 data-es>Las partes de tu vida anterior que no se detienen solo porque te mudaste</h2>
+    <div class="problem-list">
+      <div class="problem-item">
+        <span class="mark">01</span>
+        <p data-en>An IRS letter sits at an address nobody checks, and you find out three weeks too late.</p>
+        <p data-es>Una carta del IRS se queda en una dirección que nadie revisa, y te enteras tres semanas tarde.</p>
+      </div>
+      <div class="problem-item">
+        <span class="mark">02</span>
+        <p data-en>Your bank flags your account because the mailing address on file doesn't match where you live.</p>
+        <p data-es>Tu banco bloquea tu cuenta porque la dirección registrada no coincide con donde vives.</p>
+      </div>
+      <div class="problem-item">
+        <span class="mark">03</span>
+        <p data-en>A document arrives in English, dense with legal language, and you're translating it alone at midnight.</p>
+        <p data-es>Llega un documento en inglés, lleno de lenguaje legal, y lo traduces sola a medianoche.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how">
+  <div class="wrap">
+    <span class="eyebrow" data-en>How Anchor works</span>
+    <span class="eyebrow" data-es>Cómo funciona Anchor</span>
+    <h2 data-en>One address. One dashboard. One person who actually knows your name.</h2>
+    <h2 data-es>Una dirección. Un panel. Una persona que de verdad conoce tu nombre.</h2>
+    <div class="steps">
+      <div class="step">
+        <span class="step-num">1</span>
+        <div>
+          <h3 data-en>You get a real U.S. street address</h3>
+          <h3 data-es>Recibes una dirección real en EE. UU.</h3>
+          <p data-en>Not a PO box. Banks, the IRS, and Amazon all accept it without question.</p>
+          <p data-es>No es un apartado postal. Bancos, el IRS y Amazon la aceptan sin problema.</p>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-num">2</span>
+        <div>
+          <h3 data-en>Mail arrives, we scan it, you decide</h3>
+          <h3 data-es>Llega el correo, lo escaneamos, tú decides</h3>
+          <p data-en>Open and scan, forward, shred, or hold. All from the app, wherever you are.</p>
+          <p data-es>Abrir y escanear, reenviar, destruir o retener. Todo desde la app, estés donde estés.</p>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-num">3</span>
+        <div>
+          <h3 data-en>Anything confusing goes to your concierge</h3>
+          <h3 data-es>Lo que te confunda va a tu persona de confianza</h3>
+          <p data-en>A bilingual human reads the scary letter with you and tells you, plainly, what it means and what to do.</p>
+          <p data-es>Una persona bilingüe lee contigo la carta que te preocupa y te dice, claramente, qué significa y qué hacer.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIERS -->
+<section class="tiers">
+  <div class="wrap">
+    <span class="eyebrow" data-en>Founding member pricing</span>
+    <span class="eyebrow" data-es>Precio para miembros fundadoras</span>
+    <h2 data-en>Locked in for as long as you stay</h2>
+    <h2 data-es>Fijo mientras te quedes con nosotras</h2>
+    <div class="tier-grid">
+      <div class="tier">
+        <h3 data-en>Anchor Membership</h3>
+        <h3 data-es>Membresía Anchor</h3>
+        <div class="price">$67<span data-en>/month</span><span data-es>/mes</span></div>
+        <ul>
+          <li data-en>Real U.S. mailing address</li>
+          <li data-es>Dirección real en EE. UU.</li>
+          <li data-en>Unlimited mail scanning</li>
+          <li data-es>Escaneo de correo ilimitado</li>
+          <li data-en>Forwarding, shredding, storage</li>
+          <li data-es>Reenvío, destrucción, almacenamiento</li>
+          <li data-en>One concierge translation/action per month</li>
+          <li data-es>Una traducción o gestión mensual con tu persona de confianza</li>
+        </ul>
+      </div>
+      <div class="tier featured">
+        <span class="stamp-tag" data-en>Most joined</span>
+        <span class="stamp-tag" data-es>La más elegida</span>
+        <h3 data-en>Founding Family</h3>
+        <h3 data-es>Familia Fundadora</h3>
+        <div class="price">$197<span data-en>/month</span><span data-es>/mes</span></div>
+        <ul>
+          <li data-en>Everything in Anchor</li>
+          <li data-es>Todo lo de Anchor</li>
+          <li data-en>Unlimited concierge requests</li>
+          <li data-es>Gestiones ilimitadas con tu persona de confianza</li>
+          <li data-en>Priority same-day handling</li>
+          <li data-es>Atención prioritaria el mismo día</li>
+          <li data-en>Access to the OsoRich founding community</li>
+          <li data-es>Acceso a la comunidad fundadora de OsoRich</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WAITLIST -->
+<section class="waitlist" id="waitlist">
+  <div class="wrap">
+    <span class="eyebrow" data-en>Founding members open now</span>
+    <span class="eyebrow" data-es>Cupo fundador abierto ahora</span>
+    <h2 data-en>Reserve your spot before we open enrollment</h2>
+    <h2 data-es>Reserva tu lugar antes de abrir inscripciones</h2>
+    <p class="lead" data-en>Founding members lock in this price for as long as they stay. We're onboarding the first 10 by hand.</p>
+    <p class="lead" data-es>Las miembros fundadoras fijan este precio mientras se queden. Estamos incorporando a las primeras 10 de forma personal.</p>
+    <form class="waitlist-form" onsubmit="handleSubmit(event)">
+      <input type="text" placeholder="Your name / Tu nombre" required>
+      <input type="email" placeholder="Your email / Tu correo" required>
+      <button type="submit" class="btn" data-en>Yes, Save My Spot</button>
+      <button type="submit" class="btn" data-es>Sí, Guarda Mi Lugar</button>
+    </form>
+    <p class="confirm-msg" id="confirmMsg" data-en>You're on the list. We'll be in touch soon.</p>
+    <p class="confirm-msg" id="confirmMsgEs" data-es>Estás en la lista. Pronto te contactaremos.</p>
+    <p class="fine" data-en>No charge today. We'll reach out personally before anything is billed.</p>
+    <p class="fine" data-es>Sin cargo hoy. Te contactaremos personalmente antes de cualquier cobro.</p>
+  </div>
+</section>
+
+<footer>
+  <span class="brand">OsoRichMail</span>
+  <p data-en>Part of the OsoRich Living ecosystem &middot; The Gilt Joy of Thriving</p>
+  <p data-es>Parte del ecosistema OsoRich Living &middot; The Gilt Joy of Thriving</p>
+</footer>
+
+<script>
+  function setLang(lang){
+    document.body.classList.toggle('es', lang === 'es');
+    document.querySelectorAll('.lang-toggle button').forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+  }
+
+  function handleSubmit(e){
+    e.preventDefault();
+    const isEs = document.body.classList.contains('es');
+    document.getElementById(isEs ? 'confirmMsgEs' : 'confirmMsg').style.display = 'block';
+    e.target.reset();
+  }
+</script>
+
+</body>
+</html>
